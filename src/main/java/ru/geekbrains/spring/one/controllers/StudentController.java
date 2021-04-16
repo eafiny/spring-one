@@ -20,11 +20,39 @@ public class StudentController {
     }
 
     // [http://localhost:8189/app]/
-    @GetMapping("/")
-    public String showAllStudentsPage(Model model) {
+    @GetMapping("/all")
+    public String showStudentsPage(Model model) {
         List<Student> students = studentService.findAll();
         model.addAttribute("students", students);
         return "index";
+    }
+
+    @GetMapping("/")
+    public String showFindStudentForm() {
+        return "find_student_form";
+    }
+
+    @GetMapping("/students/addScore/{id}")
+    public String addScoreById(@PathVariable Long id) {
+        if (studentService.addScoreByID(id)) {
+            return "redirect:/all";
+        } else return "errorMessage";
+    }
+
+    @GetMapping("/students/minusScore/{id}")
+    public String minusScoreById(@PathVariable Long id) {
+        if (studentService.minusScoreByID(id)) {
+            return "redirect:/all";
+        } else return "errorMessage";
+    }
+
+    @PostMapping("/students/find")
+    public String findStudentById(@RequestParam Long id, Model model) {
+        Optional<Student> student = studentService.findOneById(id);
+        if (student.isPresent()) {
+            model.addAttribute("student", student.get());
+        }
+        return "student_info";
     }
 
     @GetMapping("/students/{id}")

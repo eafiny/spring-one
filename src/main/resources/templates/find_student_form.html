@@ -11,16 +11,15 @@
 
 <body>
     <div class="container">
-        <h1>Информация по студенту</h1>
-        <div th:if="${student != null}">
-            <h5 th:text="${'ID: ' + student.id}"/>
-            <h5 th:text="${'Имя: ' + student.name}"/>
-            <h5 th:text="${'Балл: ' + student.score}"/>
-        </div>
-        <div th:if="${student == null}">
-            <h5>Такого студента не существует. Проверьте ID</h5>
-        </div>
-        <a th:href="@{/}">На главную страницу</a>
+        <h1>Для поиска информации о студенте введите его ID</h1>
+
+        <form method="POST" th:action="@{/students/find}">
+            <div class="mb-3">
+                <label for="idField" class="form-label">ID</label>
+                <input type="number" class="form-control" id="idField" name="id">
+            </div>
+            <button type="submit" class="btn btn-primary">Подтвердить</button>
+        </form>
     </div>
 </body>
 </html>

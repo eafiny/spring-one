@@ -34,6 +34,14 @@ public class StudentService {
         studentRepository.deleteById(id);
     }
 
+    public boolean addScoreByID(Long id){
+        return studentRepository.addScoreById(id);
+    }
+
+    public boolean minusScoreByID(Long id){
+        return studentRepository.minusScoreById(id);
+    }
+
     public double getAverageScore() {
         return studentRepository.findAll().stream().mapToInt(Student::getScore).average().getAsDouble();
     }
